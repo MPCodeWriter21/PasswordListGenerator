@@ -564,7 +564,6 @@
             this.MaximumSize = new System.Drawing.Size(825, 551);
             this.MinimumSize = new System.Drawing.Size(825, 551);
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password List Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

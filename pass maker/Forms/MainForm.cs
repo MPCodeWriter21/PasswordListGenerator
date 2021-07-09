@@ -567,6 +567,10 @@ namespace pass_maker.Forms
         {
             fixLeft();
             fixRight();
+            IntPtr pIcon = Properties.Resources.PASS.GetHicon();
+            Icon icon = Icon.FromHandle(pIcon);
+            Icon = icon;
+            icon.Dispose();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
