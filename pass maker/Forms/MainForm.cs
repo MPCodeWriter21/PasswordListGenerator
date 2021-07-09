@@ -577,7 +577,7 @@ namespace pass_maker.Forms
         private void splitAListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SplitterForm f = new SplitterForm();
-            f.ShowDialog();
+            f.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -587,7 +587,7 @@ namespace pass_maker.Forms
 
         private void blogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://COdeWriter21.blogsky.com");
+            System.Diagnostics.Process.Start("https://COdeWriter21.blog.ir");
         }
 
         private void supportUsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -683,6 +683,11 @@ namespace pass_maker.Forms
         private void Form1_Shown(object sender, EventArgs e)
         {
             loadSettings();
+        }
+
+        private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/MPCodeWriter21/PasswordListGenerator");
         }
     }
 }

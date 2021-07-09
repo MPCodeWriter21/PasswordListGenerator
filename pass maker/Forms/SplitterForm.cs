@@ -177,5 +177,10 @@ namespace pass_maker.Forms
                 }
             }
         }
+
+        private void linkLabelCodeWriter21_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://COdeWriter21.blog.ir");
+        }
     }
 }

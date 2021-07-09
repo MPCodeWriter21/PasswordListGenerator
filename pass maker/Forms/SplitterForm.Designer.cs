@@ -42,8 +42,8 @@
             this.lblListCount = new System.Windows.Forms.Label();
             this.lblPasswordsCount = new System.Windows.Forms.Label();
             this.txtPasswordsCount = new System.Windows.Forms.TextBox();
-            this.linkLabelCodeWriter21 = new System.Windows.Forms.LinkLabel();
             this.btnSplit = new System.Windows.Forms.Button();
+            this.linkLabelCodeWriter21 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // txtInputPath
@@ -180,17 +180,6 @@
             this.txtPasswordsCount.TextChanged += new System.EventHandler(this.txt_TextChanged);
             this.txtPasswordsCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
             // 
-            // linkLabelCodeWriter21
-            // 
-            this.linkLabelCodeWriter21.AutoSize = true;
-            this.linkLabelCodeWriter21.Location = new System.Drawing.Point(365, 87);
-            this.linkLabelCodeWriter21.Name = "linkLabelCodeWriter21";
-            this.linkLabelCodeWriter21.Size = new System.Drawing.Size(66, 13);
-            this.linkLabelCodeWriter21.TabIndex = 10;
-            this.linkLabelCodeWriter21.TabStop = true;
-            this.linkLabelCodeWriter21.Text = "CodeWritr21";
-            this.linkLabelCodeWriter21.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCodeWriter21_LinkClicked);
-            // 
             // btnSplit
             // 
             this.btnSplit.Location = new System.Drawing.Point(15, 154);
@@ -201,13 +190,25 @@
             this.btnSplit.UseVisualStyleBackColor = true;
             this.btnSplit.Click += new System.EventHandler(this.btnSplit_Click);
             // 
-            // splitterForm
+            // linkLabelCodeWriter21
+            // 
+            this.linkLabelCodeWriter21.AutoSize = true;
+            this.linkLabelCodeWriter21.Font = new System.Drawing.Font("Broadway", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabelCodeWriter21.Location = new System.Drawing.Point(343, 88);
+            this.linkLabelCodeWriter21.Name = "linkLabelCodeWriter21";
+            this.linkLabelCodeWriter21.Size = new System.Drawing.Size(88, 12);
+            this.linkLabelCodeWriter21.TabIndex = 12;
+            this.linkLabelCodeWriter21.TabStop = true;
+            this.linkLabelCodeWriter21.Text = "CodeWriter21";
+            this.linkLabelCodeWriter21.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCodeWriter21_LinkClicked_1);
+            // 
+            // SplitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 184);
-            this.Controls.Add(this.btnSplit);
             this.Controls.Add(this.linkLabelCodeWriter21);
+            this.Controls.Add(this.btnSplit);
             this.Controls.Add(this.lblListCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.radioPasswordsCount);
@@ -225,7 +226,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(459, 223);
             this.MinimumSize = new System.Drawing.Size(459, 223);
-            this.Name = "splitterForm";
+            this.Name = "SplitterForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -252,7 +253,7 @@
         private System.Windows.Forms.Label lblListCount;
         private System.Windows.Forms.Label lblPasswordsCount;
         private System.Windows.Forms.TextBox txtPasswordsCount;
-        public System.Windows.Forms.LinkLabel linkLabelCodeWriter21;
         private System.Windows.Forms.Button btnSplit;
+        public System.Windows.Forms.LinkLabel linkLabelCodeWriter21;
     }
 }

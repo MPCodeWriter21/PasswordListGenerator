@@ -73,6 +73,8 @@
             this.btnAddWords = new System.Windows.Forms.Button();
             this.lblResultsCount = new System.Windows.Forms.Label();
             this.lblWordsCount = new System.Windows.Forms.Label();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -293,7 +295,7 @@
             // 
             this.splitAListToolStripMenuItem.Name = "splitAListToolStripMenuItem";
             this.splitAListToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.splitAListToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.splitAListToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.splitAListToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.splitAListToolStripMenuItem.Text = "Split A List";
@@ -330,7 +332,7 @@
             // 
             this.copyPasswordsToolStripMenuItem.Name = "copyPasswordsToolStripMenuItem";
             this.copyPasswordsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.copyPasswordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+            this.copyPasswordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.C)));
             this.copyPasswordsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.copyPasswordsToolStripMenuItem.Text = "Copy Passwords";
@@ -341,7 +343,7 @@
             // 
             this.cutPasswordsToolStripMenuItem.Name = "cutPasswordsToolStripMenuItem";
             this.cutPasswordsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.cutPasswordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+            this.cutPasswordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.X)));
             this.cutPasswordsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.cutPasswordsToolStripMenuItem.Text = "Cut Passwords";
@@ -357,7 +359,7 @@
             // 
             this.copyWordsToolStripMenuItem.Name = "copyWordsToolStripMenuItem";
             this.copyWordsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.copyWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.copyWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.C)));
             this.copyWordsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.copyWordsToolStripMenuItem.Text = "Copy Words";
@@ -367,7 +369,7 @@
             // 
             this.cutWordsToolStripMenuItem.Name = "cutWordsToolStripMenuItem";
             this.cutWordsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.cutWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.cutWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.X)));
             this.cutWordsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.cutWordsToolStripMenuItem.Text = "Cut Words";
@@ -377,7 +379,7 @@
             // 
             this.pasteWordsToolStripMenuItem.Name = "pasteWordsToolStripMenuItem";
             this.pasteWordsToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.pasteWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.pasteWordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
             this.pasteWordsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.pasteWordsToolStripMenuItem.Text = "Paste Words";
@@ -388,7 +390,9 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blogToolStripMenuItem,
             this.telegramChannelToolStripMenuItem,
-            this.supportUsToolStripMenuItem});
+            this.supportUsToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.gitHubToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -411,6 +415,7 @@
             // 
             // supportUsToolStripMenuItem
             // 
+            this.supportUsToolStripMenuItem.Enabled = false;
             this.supportUsToolStripMenuItem.Name = "supportUsToolStripMenuItem";
             this.supportUsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             this.supportUsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
@@ -509,7 +514,20 @@
             this.lblWordsCount.Size = new System.Drawing.Size(0, 13);
             this.lblWordsCount.TabIndex = 20;
             // 
-            // Form1
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(206, 6);
+            // 
+            // gitHubToolStripMenuItem
+            // 
+            this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
+            this.gitHubToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.G)));
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.gitHubToolStripMenuItem.Text = "GitHub";
+            this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -545,7 +563,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(825, 551);
             this.MinimumSize = new System.Drawing.Size(825, 551);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password List Generator";
@@ -604,6 +622,8 @@
         private System.Windows.Forms.ToolStripMenuItem cutWordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteWordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem telegramChannelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem gitHubToolStripMenuItem;
     }
 }
 
