@@ -86,9 +86,9 @@ namespace pass_maker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int min {
+        public string min {
             get {
-                return ((int)(this["min"]));
+                return ((string)(this["min"]));
             }
             set {
                 this["min"] = value;
@@ -98,9 +98,9 @@ namespace pass_maker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public int max {
+        public string max {
             get {
-                return ((int)(this["max"]));
+                return ((string)(this["max"]));
             }
             set {
                 this["max"] = value;
@@ -110,9 +110,9 @@ namespace pass_maker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int maxCount {
+        public string maxCount {
             get {
-                return ((int)(this["maxCount"]));
+                return ((string)(this["maxCount"]));
             }
             set {
                 this["maxCount"] = value;
@@ -122,9 +122,9 @@ namespace pass_maker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2100")]
-        public int splitCount {
+        public string splitCount {
             get {
-                return ((int)(this["splitCount"]));
+                return ((string)(this["splitCount"]));
             }
             set {
                 this["splitCount"] = value;
@@ -134,9 +134,9 @@ namespace pass_maker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("21")]
-        public int maxThread {
+        public string maxThread {
             get {
-                return ((int)(this["maxThread"]));
+                return ((string)(this["maxThread"]));
             }
             set {
                 this["maxThread"] = value;

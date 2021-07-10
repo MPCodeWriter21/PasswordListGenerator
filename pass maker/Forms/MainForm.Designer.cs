@@ -32,7 +32,7 @@
             this.richTxtWords = new System.Windows.Forms.RichTextBox();
             this.richTxtMethods1 = new System.Windows.Forms.RichTextBox();
             this.richTxtResults = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGenerate = new System.Windows.Forms.Button();
             this.richTxtMethods2 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -64,6 +64,8 @@
             this.blogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.telegramChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chboxSplitList = new System.Windows.Forms.CheckBox();
             this.lblSplitCount = new System.Windows.Forms.Label();
             this.txtMaxPassCount = new System.Windows.Forms.TextBox();
@@ -73,8 +75,6 @@
             this.btnAddWords = new System.Windows.Forms.Button();
             this.lblResultsCount = new System.Windows.Forms.Label();
             this.lblWordsCount = new System.Windows.Forms.Label();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,15 +105,15 @@
             this.richTxtResults.Text = "";
             this.richTxtResults.TextChanged += new System.EventHandler(this.richTxtResults_TextChanged);
             // 
-            // button1
+            // btnGenerate
             // 
-            this.button1.Location = new System.Drawing.Point(541, 468);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(256, 30);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnGenerate.Location = new System.Drawing.Point(541, 468);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(256, 30);
+            this.btnGenerate.TabIndex = 3;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // richTxtMethods2
             // 
@@ -250,7 +250,6 @@
             this.txtMaxThread.Text = "21";
             this.txtMaxThread.TextChanged += new System.EventHandler(this.txt_TextChanged);
             this.txtMaxThread.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
-            this.txtMaxThread.Leave += new System.EventHandler(this.txtMaxThread_Leave);
             // 
             // menuStrip1
             // 
@@ -422,6 +421,19 @@
             this.supportUsToolStripMenuItem.Text = "Support Us";
             this.supportUsToolStripMenuItem.Click += new System.EventHandler(this.supportUsToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(206, 6);
+            // 
+            // gitHubToolStripMenuItem
+            // 
+            this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
+            this.gitHubToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.G)));
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.gitHubToolStripMenuItem.Text = "GitHub";
+            this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
+            // 
             // chboxSplitList
             // 
             this.chboxSplitList.AutoSize = true;
@@ -514,19 +526,6 @@
             this.lblWordsCount.Size = new System.Drawing.Size(0, 13);
             this.lblWordsCount.TabIndex = 20;
             // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(206, 6);
-            // 
-            // gitHubToolStripMenuItem
-            // 
-            this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
-            this.gitHubToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.G)));
-            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.gitHubToolStripMenuItem.Text = "GitHub";
-            this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -554,7 +553,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTxtMethods2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.richTxtResults);
             this.Controls.Add(this.richTxtMethods1);
             this.Controls.Add(this.richTxtWords);
@@ -587,7 +586,7 @@
         public System.Windows.Forms.RichTextBox richTxtWords;
         public System.Windows.Forms.RichTextBox richTxtMethods1;
         public System.Windows.Forms.RichTextBox richTxtResults;
-        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button btnGenerate;
         public System.Windows.Forms.RichTextBox richTxtMethods2;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label label2;

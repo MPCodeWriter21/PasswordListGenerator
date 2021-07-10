@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CodeWriter21")]
-[assembly: AssemblyProduct("pass maker")]
+[assembly: AssemblyProduct("P@$$wordList Generator")]
 [assembly: AssemblyCopyright("Copyright ©  2020-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

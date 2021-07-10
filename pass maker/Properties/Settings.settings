@@ -17,19 +17,19 @@
     <Setting Name="filterLength" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="min" Type="System.Int32" Scope="User">
+    <Setting Name="min" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="max" Type="System.Int32" Scope="User">
+    <Setting Name="max" Type="System.String" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="maxCount" Type="System.Int32" Scope="User">
+    <Setting Name="maxCount" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="splitCount" Type="System.Int32" Scope="User">
+    <Setting Name="splitCount" Type="System.String" Scope="User">
       <Value Profile="(Default)">2100</Value>
     </Setting>
-    <Setting Name="maxThread" Type="System.Int32" Scope="User">
+    <Setting Name="maxThread" Type="System.String" Scope="User">
       <Value Profile="(Default)">21</Value>
     </Setting>
   </Settings>
