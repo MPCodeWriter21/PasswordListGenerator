@@ -10,9 +10,19 @@ namespace pass_maker.Forms
 {
     public partial class MainForm : Form
     {
+        // Defines a ProgressForm
+        /*
+         * We use progressForm to show the progress of password generation on screen
+         */
         ProgressForm progressForm = new ProgressForm();
+        // Defines a AddingWordsForm
+        /*
+         * We use addingWordsForm to show the progress of word generation on screen
+         */
         AddingWordsForm addingWordsForm = new AddingWordsForm();
+        // resultList is a List<string> object which is supposed to save generated passwords
         List<string> resultList = new List<string>();
+        // These variables save user's input methods
         string[] methods = new string[0];
         string[] methods2 = new string[0];
 
@@ -21,6 +31,7 @@ namespace pass_maker.Forms
             InitializeComponent();
         }
 
+        // Loads user's settings
         private void loadSettings()
         {
             var txtMinLengthText = Properties.Settings.Default.min;
@@ -46,12 +57,12 @@ namespace pass_maker.Forms
             txtMaxThread.Text = txtMaxThreadText;
         }
 
+        // Saves user's settings
         private void saveSettings()
         {
             Properties.Settings.Default.min = txtMinLength.Text;
             Properties.Settings.Default.max = txtMaxLength.Text;
             Properties.Settings.Default.words = richTxtWords.Text;
-            string x = Properties.Settings.Default.words;
             Properties.Settings.Default.multiThread = chboxMultiThread.Checked;
             Properties.Settings.Default.limitCount = chboxLimitMaxPassCount.Checked;
             Properties.Settings.Default.maxCount = txtMaxPassCount.Text;
@@ -153,43 +164,66 @@ namespace pass_maker.Forms
             fixRight();
         }
 
+        // This function reads input words and generates ne words using defined methods
         private void AddWords()
         {
+            // words variable saves input words
             string[] words = new string[0];
             Invoke(new Action(() =>
             {
+                // Saves words in words variable
                 words = richTxtWords.Lines;
+                // Disables MainForm to prevent user from changing things during the generation process
                 Enabled = false;
+                // Defines new AddingWordsForm
                 addingWordsForm = new AddingWordsForm();
+                // Sets addingWordsForm's Owner to this(MainForm)
+                /*
+                 * It makes addingWordsForm to stand on the MainForm
+                 * and
+                 * We will use this attribute in addingWordsForm's code
+                 */
                 addingWordsForm.Owner = this;
+                // Shows the count of input words on addingWordsForm
                 addingWordsForm.lblInputWords.Text = words.Length.ToString();
+                // Shows the addingWordsForm
                 addingWordsForm.Show();
             }));
+            // Defines a list to save outputs
             List<string> output = words.ToList();
+            // Generates New Word using Method 1 on each word in words array
             foreach (string word in words)
             {
+                // tmp variable is a variable to store new words
+                // Sets tmp to a full lowercase string
                 string tmp = word.ToLower();
                 if (!output.Contains(tmp))
                     output.Add(tmp);
+                // Sets tmp to a full uppercase string
                 tmp = word.ToUpper();
                 if (!output.Contains(tmp))
                     output.Add(tmp);
-                if (word.Length > 0)
+                if (word.Length > 1)
                 {
+                    // Sets tmp to a string starting with an uppercase character fallowing by lowercase characters
                     tmp = word[0].ToString().ToUpper() + word.Substring(1).ToLower();
                     if (!output.Contains(tmp))
                         output.Add(tmp);
                 }
+                // Shows progress on addingWordsForm
                 Invoke(new Action(() =>
                 {
                     addingWordsForm.lblNewWords.Text = (output.Count - words.Length).ToString();
                     addingWordsForm.lblTotalWords.Text = output.Count.ToString();
                     addingWordsForm.lblWord.Text = tmp;
                 }));
+                // Checks if the user has decided to stop the generation process
                 if (addingWordsForm.cancel)
                     break;
             }
+
             string[] chs = new string[] { "a:@", "a:4", "A:@", "A:4", "s:$", "S:$", "i:!", "i:1", "i:l", "i:I", "I:!", "I:1", "I:l", "I:i", "l:!", "l:1", "l:i", "l:I", "1:!", "1:i", "1:l", "1:I", "g:9", "G:6", "o:0", "O:0", "E:3", "e:3", "0:O", "0:o", "3:E", "4:A", "5:S", "5:s", "s:5", "S:5" };
+            // Generates New Word using Method 2 on each word in words array
             foreach (string i in chs)
             {
                 string a = i.Split(':')[0];
@@ -202,6 +236,7 @@ namespace pass_maker.Forms
                         output.Add(tmp);
                     if (addingWordsForm.cancel)
                         break;
+                    // Shows progress on addingWordsForm
                     Invoke(new Action(() =>
                     {
                         addingWordsForm.lblNewWords.Text = (output.Count - words.Length).ToString();
@@ -209,13 +244,17 @@ namespace pass_maker.Forms
                         addingWordsForm.lblWord.Text = tmp;
                     }));
                 }
+                // Checks if the user has decided to stop the generation process
                 if (addingWordsForm.cancel)
                     break;
             }
             Invoke(new Action(() =>
             {
+                // Writes new generated words in richTxtWords
                 richTxtWords.Lines = output.ToArray();
+                // Enables MainForm
                 Enabled = true;
+                // Closes addingWordsForm
                 addingWordsForm.Close();
             }));
         }
@@ -548,7 +587,9 @@ namespace pass_maker.Forms
 
         private void linkLabelCodeWriter21_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://COdeWriter21.blog.ir");
+            // Starts https://CodeWriter21.blog.ir
+            // To support us, please DONOT DELETE THESE LINES
+            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
@@ -639,6 +680,7 @@ namespace pass_maker.Forms
         {
             fixLeft();
             fixRight();
+            // Sets MainForm's icon
             IntPtr pIcon = Properties.Resources.PASS.GetHicon();
             Icon icon = Icon.FromHandle(pIcon);
             Icon = icon;
@@ -663,12 +705,14 @@ namespace pass_maker.Forms
 
         private void blogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://COdeWriter21.blog.ir");
+            // Starts https://CodeWriter21.blog.ir
+            // To support us, please DONOT DELETE THESE LINES
+            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
         }
 
         private void supportUsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://COdeWriter21.blogsky.com/Support-Us");
+            
         }
 
         // Add Words Button OnClick event callback method
@@ -679,11 +723,13 @@ namespace pass_maker.Forms
             addWordsThread.Start();
         }
 
+        // Shows output passwords count
         private void richTxtResults_TextChanged(object sender, EventArgs e)
         {
             lblResultsCount.Text = richTxtResults.Lines.Length.ToString();
         }
 
+        // Shows input words count
         private void richTxtWords_TextChanged(object sender, EventArgs e)
         {
             lblWordsCount.Text = richTxtWords.Lines.Length.ToString();
@@ -713,6 +759,8 @@ namespace pass_maker.Forms
 
         private void telegramChannelToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Starts https://t.me/CodeWriter21
+            // To support us, please DONOT DELETE THESE LINES
             System.Diagnostics.Process.Start("https://t.me/CodeWriter21");
         }
 
@@ -765,6 +813,8 @@ namespace pass_maker.Forms
 
         private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Starts https://github.com/MPCodeWriter21/PasswordListGenerator
+            // To support us, please DONOT DELETE THESE LINES
             System.Diagnostics.Process.Start("https://github.com/MPCodeWriter21/PasswordListGenerator");
         }
     }
