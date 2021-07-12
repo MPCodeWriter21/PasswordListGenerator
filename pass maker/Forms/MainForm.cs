@@ -14,17 +14,29 @@ namespace pass_maker.Forms
         /*
          * We use progressForm to show the progress of password generation on screen
          */
-        ProgressForm progressForm = new ProgressForm();
+        private ProgressForm progressForm = new ProgressForm();
         // Defines a AddingWordsForm
         /*
          * We use addingWordsForm to show the progress of word generation on screen
          */
-        AddingWordsForm addingWordsForm = new AddingWordsForm();
+        private AddingWordsForm addingWordsForm = new AddingWordsForm();
         // resultList is a List<string> object which is supposed to save generated passwords
-        List<string> resultList = new List<string>();
+        private List<string> resultList = new List<string>();
         // These variables save user's input methods
-        string[] methods = new string[0];
-        string[] methods2 = new string[0];
+        private string[] methods = new string[0];
+        private string[] methods2 = new string[0];
+        // passwordGenerationStartTime variable is used to calculate password generation speed and time left=
+        private DateTimeOffset PGStartTime;
+        public DateTimeOffset passwordGenerationStartTime
+        {
+            get { return PGStartTime; }
+            set
+            {
+                pregeneratedPasswordsCount = resultList.Count;
+                PGStartTime = value;
+            }
+        }
+        private int pregeneratedPasswordsCount = 0;
 
         public MainForm()
         {
@@ -223,13 +235,17 @@ namespace pass_maker.Forms
             }
 
             string[] chs = new string[] { "a:@", "a:4", "A:@", "A:4", "s:$", "S:$", "i:!", "i:1", "i:l", "i:I", "I:!", "I:1", "I:l", "I:i", "l:!", "l:1", "l:i", "l:I", "1:!", "1:i", "1:l", "1:I", "g:9", "G:6", "o:0", "O:0", "E:3", "e:3", "0:O", "0:o", "3:E", "4:A", "5:S", "5:s", "s:5", "S:5" };
+
+            // A copy of output list
+            List<string> outputCopy = new List<string>();
+            outputCopy.AddRange(output);
             // Generates New Word using Method 2 on each word in words array
             foreach (string i in chs)
             {
                 string a = i.Split(':')[0];
                 string b = i.Split(':')[1];
                 string tmp = "";
-                foreach (string word in output.ToArray())
+                foreach (string word in outputCopy)
                 {
                     tmp = word.Replace(a, b);
                     if (!output.Contains(tmp))
@@ -271,6 +287,147 @@ namespace pass_maker.Forms
             // Starts (Start Method) as a new thread
             Thread t = new Thread(Start);
             t.Start();
+        }
+
+        // Converts a long integer(seconds) to a string like (x hours and y minutes) or (x minutes and y seconds)
+        private string GetReadableTime(long TimeSecs)
+        {
+            if (TimeSecs < 0)
+                return "Unknown";
+            long days = 0;
+            long hours = 0;
+            long minutes = 0;
+            long seconds = TimeSecs;
+            while (seconds > 60)
+            {
+                minutes++;
+                seconds -= 60;
+            }
+            while (minutes > 60)
+            {
+                hours++;
+                minutes -= 60;
+            }
+            while (hours > 24)
+            {
+                days++;
+                hours -= 24;
+            }
+            string output = "";
+            if (days != 0)
+            {
+                if (days == 1)
+                {
+                    if (hours != 0)
+                    {
+                        if (hours == 1)
+                            output = "1 day and 1 hour";
+                        else
+                            output = $"1 day and {hours} hours";
+                    }
+                    else
+                        output = "1 day";
+                }
+                else
+                {
+                    if (hours != 0)
+                    {
+                        if (hours == 1)
+                            output = $"{days} days and 1 hour";
+                        else
+                            output = $"{days} days and {hours} hours";
+                    }
+                    else
+                        output = $"{days} days";
+                }
+            }
+            else if (hours != 0)
+            {
+                if (hours == 1)
+                {
+                    if (minutes != 0)
+                    {
+                        if (minutes == 1)
+                            output = "1 hour and 1 minute";
+                        else
+                            output = $"1 hour and {minutes} minutes";
+                    }
+                    else
+                        output = "1 hour";
+                }
+                else
+                {
+                    if (minutes != 0)
+                    {
+                        if (minutes == 1)
+                            output = $"{hours} hours and 1 minute";
+                        else
+                            output = $"{hours} hours and {minutes} minutes";
+                    }
+                    else
+                        output = $"{hours} hours";
+                }
+            }
+            else if (minutes != 0)
+            {
+                if (minutes == 1)
+                {
+                    if (seconds != 0)
+                    {
+                        if (seconds == 1)
+                            output = "1 minute and 1 second";
+                        else
+                            output = $"1 minute and {seconds} seconds";
+                    }
+                    else
+                        output = "1 minute";
+                }
+                else
+                {
+                    if (seconds != 0)
+                    {
+                        if (seconds == 1)
+                            output = $"{minutes} minutes and 1 second";
+                        else
+                            output = $"{minutes} minutes and {seconds} seconds";
+                    }
+                    else
+                        output = $"{minutes} minutes";
+                }
+            }
+            else
+            {
+                if (seconds < 2)
+                    output = $"{seconds} second";
+                else
+                    output = $"{seconds} seconds";
+            }
+
+            return output;
+        }
+
+        // Shows password generation progress on progressForm
+        private void ShowPasswordGenerationProgress()
+        {
+            Invoke(new Action(() =>
+            {
+                // Shows passwords' count on progressForm
+                progressForm.lblCount.Text = resultList.Count.ToString();
+                // Sets progressBar value
+                progressForm.progressBar.Value = resultList.Count;
+                // Shows progress in percents
+                progressForm.lblPercent.Text = (resultList.Count * 100.0 / progressForm.progressBar.Maximum).ToString("0.00") + "%";
+                DateTimeOffset now = DateTimeOffset.Now;
+                // Calculates generation speed(passwords per second)
+                double speed = (resultList.Count - pregeneratedPasswordsCount) * 1000.0 / (now.ToUnixTimeMilliseconds() - passwordGenerationStartTime.ToUnixTimeMilliseconds());
+                // Shows password generation speed on progressForm
+                progressForm.lblSpeed.Text = speed.ToString("0") + " pass/sec";
+                // Shows time left on progressForm
+                if (progressForm.paused)
+                    progressForm.lblTimeLeft.Text = "Paused";
+                else
+                    progressForm.lblTimeLeft.Text = GetReadableTime((progressForm.progressBar.Maximum - progressForm.progressBar.Value) / Convert.ToInt32(speed));
+            }));
         }
 
         // Generate passwords using a word and methods
@@ -321,11 +478,9 @@ namespace pass_maker.Forms
                     if (!resultList.Contains(word + method2))
                         resultList.Add(word + method2);
                 }
-                Invoke(new Action(() =>
-                {
-                    // Shows passwords' count on progressForm
-                    progressForm.lblCount.Text = resultList.Count.ToString();
-                }));
+
+                ShowPasswordGenerationProgress();
+
                 // Checks if we have a count limitation or the user has decided to stop the generation process
                 if (progressForm.cancel || (limitCount && resultList.Count >= maxCount))
                     break;
@@ -360,7 +515,7 @@ namespace pass_maker.Forms
                  * maxCount variable saves maximum count of passwords for the whole password list
                  */
                 int maxThread = 21, min = 1, max = 1000, maxCount = 0, splitCount = 2100;
-                
+
                 Invoke(new Action(() =>
                 {
                     // Gets user's values for Words List and Methods
@@ -405,8 +560,12 @@ namespace pass_maker.Forms
                     count += (Words.Count * methods2.Length);
                     count += (methods2.Length * Words.Count);
                     count += Words.Count;
-                    progressForm.lblTarget.Text = "Target: " + count.ToString();
+                    progressForm.progressBar.Maximum = count;
                 }));
+
+                // Sets passwordGenerationStartTime value
+                passwordGenerationStartTime = DateTimeOffset.Now;
+
                 // Sets resultList value to a new List<string>
                 resultList = new List<string>();
 
@@ -430,7 +589,7 @@ namespace pass_maker.Forms
                 {
                     // Defines a list of threads
                     List<Thread> threads = new List<Thread>();
-                    
+
                     foreach (string word in Words)
                     {
                         // Checks if threads are full
@@ -455,6 +614,21 @@ namespace pass_maker.Forms
                         // Checks if we have a count limitation or the user has decided to stop the generation process
                         if (progressForm.cancel || (limitCount && resultList.Count >= maxCount))
                             break;
+                        while (progressForm.paused)
+                        {
+                            for (int i = 0; i < threads.Count; i++)
+                            {
+                                while (threads[i].IsAlive)
+                                    continue;
+                            }
+                            Invoke(new Action(() =>
+                            {
+                                progressForm.btnPauseResume.Enabled = true;
+                            }));
+                            if (progressForm.cancel || (limitCount && resultList.Count >= maxCount))
+                                break;
+                            Thread.Sleep(500);
+                        }
                     }
                     // Waits for each thread to stop working
                     for (int i = 0; i < threads.Count; i++)
@@ -472,6 +646,9 @@ namespace pass_maker.Forms
                         // Checks if we have a count limitation or the user has decided to stop the generation process
                         if (progressForm.cancel || (limitCount && resultList.Count >= maxCount))
                             break;
+                        while (progressForm.paused)
+                            if (progressForm.cancel || (limitCount && resultList.Count >= maxCount))
+                                break;
                     }
                 }
                 // Checks if user has enabled Filter Length option
@@ -501,13 +678,14 @@ namespace pass_maker.Forms
                         // Checks if the length of pass is in the user's preferred range
                         if ((l.Length >= min) && (l.Length <= max))
                             resultList.Add(l);
-                        
+
                         if (i % n == 0)
                         {
                             Invoke(new Action(() =>
                             {
                                 // Shows the progress on progressForm
-                                progressForm.lblCount.Text = "Checking: " + (i * 100.0 / tmp.Count).ToString("0.00") + "%";
+                                progressForm.lblTimeLeft.Text = "Checking...";
+                                progressForm.lblPercent.Text = (i * 100.0 / tmp.Count).ToString("0.00") + "%";
                             }));
                         }
                     }
@@ -594,8 +772,10 @@ namespace pass_maker.Forms
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // returns if user presses Backspace Button
             if (e.KeyChar == '\b')
                 return;
+            // Chacks if user entered a number
             if (!char.IsNumber(e.KeyChar))
                 e.Handled = true;
             TextBox Sender = ((TextBox)sender);
@@ -637,27 +817,39 @@ namespace pass_maker.Forms
             OpenWordList();
         }
 
+        // Open Word List Method
+        // Reads a wordlist and write it in richTxtWords
         private void OpenWordList()
         {
+            // Defines openFD
             OpenFileDialog openFD = new OpenFileDialog();
             openFD.Multiselect = false;
             openFD.Filter = "Text Document|*.txt";
             openFD.Title = "Select a WordList";
+            // Shows openFD dislog
             if (openFD.ShowDialog() == DialogResult.OK)
             {
+                // Reads choosen file
                 string words = File.ReadAllText(openFD.FileName);
+                // Checks id words variable is empty
                 if (words.Length < 1)
                     return;
+                // Checks if there is anything in richTxtWords
                 if (richTxtWords.Text.Length > 0)
                 {
+                    // Shows a message to user
                     DialogResult result = MessageBox.Show("You want to\nClear current Words and open WordList\nor\nAppend WordList to the current Words?\nClear : Yes\nAppend : No", "Clear OR Append?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
-                        richTxtWords.Text = "";
+                        // Clears richTxtWords text
+                        richTxtWords.Clear();
                     else if (result == DialogResult.No)
+                        // Adds a NewLine to the end of richTxtWords' text
                         richTxtWords.Text += "\n";
                     else
+                        // Returns
                         return;
                 }
+                // Append new words to the end of richTxtWords' text
                 richTxtWords.Text += words;
             }
         }
@@ -676,6 +868,7 @@ namespace pass_maker.Forms
             saveSettings();
         }
 
+        // Fixes form and changes its icon
         private void Form1_Load(object sender, EventArgs e)
         {
             fixLeft();
@@ -687,17 +880,21 @@ namespace pass_maker.Forms
             icon.Dispose();
         }
 
+        // Saves settings before form closes
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Saves settings before form closes
             saveSettings();
         }
 
+        // Shows split form
         private void splitAListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SplitterForm f = new SplitterForm();
             f.Show();
         }
 
+        // Closes the application
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -712,7 +909,7 @@ namespace pass_maker.Forms
 
         private void supportUsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         // Add Words Button OnClick event callback method
@@ -735,6 +932,7 @@ namespace pass_maker.Forms
             lblWordsCount.Text = richTxtWords.Lines.Length.ToString();
         }
 
+        // Copies passwords in richTxtResults to clipboard
         private void copyPasswordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (richTxtResults.Text == "")
@@ -746,6 +944,7 @@ namespace pass_maker.Forms
             MessageBox.Show("Passwords Coppied!!", "Coppied!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // Copies passwords in richTxtResults to clipboard and clears richTxtResults' text
         private void cutPasswordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (richTxtResults.Text == "")
@@ -754,7 +953,7 @@ namespace pass_maker.Forms
                 return;
             }
             Clipboard.SetText(richTxtResults.Text);
-            richTxtResults.Text = "";
+            richTxtResults.Clear();
         }
 
         private void telegramChannelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -764,6 +963,7 @@ namespace pass_maker.Forms
             System.Diagnostics.Process.Start("https://t.me/CodeWriter21");
         }
 
+        // Copies words in richTxtWords to clipboard
         private void copyWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (richTxtWords.Text == "")
@@ -775,6 +975,7 @@ namespace pass_maker.Forms
             MessageBox.Show("Passwords Coppied!!", "Coppied!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // Copies words in richTxtWords to clipboard and clears richTxtWords' text
         private void cutWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (richTxtWords.Text == "")
@@ -783,9 +984,10 @@ namespace pass_maker.Forms
                 return;
             }
             Clipboard.SetText(richTxtWords.Text);
-            richTxtWords.Text = "";
+            richTxtWords.Clear();
         }
 
+        // Paste words from clipboard in richTxtWords
         private void pasteWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Clipboard.ContainsText())
@@ -806,6 +1008,7 @@ namespace pass_maker.Forms
             richTxtWords.Text += Clipboard.GetText();
         }
 
+        // Loads settings
         private void Form1_Shown(object sender, EventArgs e)
         {
             loadSettings();
