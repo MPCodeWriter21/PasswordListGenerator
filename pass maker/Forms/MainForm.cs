@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Linq;
+using System.IO;
 
 namespace pass_maker.Forms
 {
@@ -42,6 +42,9 @@ namespace pass_maker.Forms
         {
             InitializeComponent();
         }
+
+
+        #region Settings Methods
 
         // Loads user's settings
         private void loadSettings()
@@ -84,6 +87,10 @@ namespace pass_maker.Forms
             Properties.Settings.Default.maxThread = txtMaxThread.Text;
             Properties.Settings.Default.Save();
         }
+
+        #endregion
+
+        #region Fix Methods
 
         private void fixRight()
         {
@@ -175,6 +182,8 @@ namespace pass_maker.Forms
             txtPartCount.Top = lblSplitCount.Top + 23;
             fixRight();
         }
+
+        #endregion
 
         // This function reads input words and generates ne words using defined methods
         private void AddWords()
@@ -275,137 +284,6 @@ namespace pass_maker.Forms
             }));
         }
 
-        // Generate Button OnClick event callback method
-        private void btnGenerate_Click(object sender, EventArgs e)
-        {
-            // Checks if user entered any words to generate passwords
-            if (richTxtWords.Text == "")
-            {
-                MessageBox.Show("Please enter some words to generate passwords!!", "No Word?!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            // Starts (Start Method) as a new thread
-            Thread t = new Thread(Start);
-            t.Start();
-        }
-
-        // Converts a long integer(seconds) to a string like (x hours and y minutes) or (x minutes and y seconds)
-        private string GetReadableTime(long TimeSecs)
-        {
-            if (TimeSecs < 0)
-                return "Unknown";
-            long days = 0;
-            long hours = 0;
-            long minutes = 0;
-            long seconds = TimeSecs;
-            while (seconds > 60)
-            {
-                minutes++;
-                seconds -= 60;
-            }
-            while (minutes > 60)
-            {
-                hours++;
-                minutes -= 60;
-            }
-            while (hours > 24)
-            {
-                days++;
-                hours -= 24;
-            }
-            string output = "";
-            if (days != 0)
-            {
-                if (days == 1)
-                {
-                    if (hours != 0)
-                    {
-                        if (hours == 1)
-                            output = "1 day and 1 hour";
-                        else
-                            output = $"1 day and {hours} hours";
-                    }
-                    else
-                        output = "1 day";
-                }
-                else
-                {
-                    if (hours != 0)
-                    {
-                        if (hours == 1)
-                            output = $"{days} days and 1 hour";
-                        else
-                            output = $"{days} days and {hours} hours";
-                    }
-                    else
-                        output = $"{days} days";
-                }
-            }
-            else if (hours != 0)
-            {
-                if (hours == 1)
-                {
-                    if (minutes != 0)
-                    {
-                        if (minutes == 1)
-                            output = "1 hour and 1 minute";
-                        else
-                            output = $"1 hour and {minutes} minutes";
-                    }
-                    else
-                        output = "1 hour";
-                }
-                else
-                {
-                    if (minutes != 0)
-                    {
-                        if (minutes == 1)
-                            output = $"{hours} hours and 1 minute";
-                        else
-                            output = $"{hours} hours and {minutes} minutes";
-                    }
-                    else
-                        output = $"{hours} hours";
-                }
-            }
-            else if (minutes != 0)
-            {
-                if (minutes == 1)
-                {
-                    if (seconds != 0)
-                    {
-                        if (seconds == 1)
-                            output = "1 minute and 1 second";
-                        else
-                            output = $"1 minute and {seconds} seconds";
-                    }
-                    else
-                        output = "1 minute";
-                }
-                else
-                {
-                    if (seconds != 0)
-                    {
-                        if (seconds == 1)
-                            output = $"{minutes} minutes and 1 second";
-                        else
-                            output = $"{minutes} minutes and {seconds} seconds";
-                    }
-                    else
-                        output = $"{minutes} minutes";
-                }
-            }
-            else
-            {
-                if (seconds < 2)
-                    output = $"{seconds} second";
-                else
-                    output = $"{seconds} seconds";
-            }
-
-            return output;
-        }
-
         // Shows password generation progress on progressForm
         private void ShowPasswordGenerationProgress()
         {
@@ -426,7 +304,7 @@ namespace pass_maker.Forms
                 if (progressForm.paused)
                     progressForm.lblTimeLeft.Text = "Paused";
                 else
-                    progressForm.lblTimeLeft.Text = GetReadableTime((progressForm.progressBar.Maximum - progressForm.progressBar.Value) / Convert.ToInt32(speed));
+                    progressForm.lblTimeLeft.Text = Classes.Convertor.GetReadableTime((progressForm.progressBar.Maximum - progressForm.progressBar.Value) / Convert.ToInt32(speed));
             }));
         }
 
@@ -763,47 +641,67 @@ namespace pass_maker.Forms
             }
         }
 
-        private void linkLabelCodeWriter21_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        // Open Word List Method
+        // Reads a wordlist and write it in richTxtWords
+        private void OpenWordList(string path)
         {
-            // Starts https://CodeWriter21.blog.ir
-            // To support us, please DONOT DELETE THESE LINES
-            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
-        }
-
-        private void txt_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // returns if user presses Backspace Button
-            if (e.KeyChar == '\b')
+            // Reads input file
+            string words = File.ReadAllText(path);
+            // Checks if words variable is empty
+            if (words.Length < 1)
                 return;
-            // Chacks if user entered a number
-            if (!char.IsNumber(e.KeyChar))
-                e.Handled = true;
-            TextBox Sender = ((TextBox)sender);
-            if (Sender.SelectionLength < 1)
+            // Checks if there is anything in richTxtWords
+            if (richTxtWords.Text.Length > 0)
             {
-                if (Sender.TextLength == 9)
-                {
-                    if ((!(int.Parse(Sender.Text) <= 214748364)) || (!(int.Parse(e.KeyChar.ToString()) <= 7)))
-                        e.Handled = true;
-                }
-                if (Sender.TextLength > 9)
-                    e.Handled = true;
+                // Shows a message to user
+                DialogResult result = MessageBox.Show("You want to\nClear current Words and open WordList\nor\nAppend WordList to the current Words?\nClear : Yes\nAppend : No", "Clear OR Append?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                    // Clears richTxtWords text
+                    richTxtWords.Clear();
+                else if (result == DialogResult.No)
+                    // Adds a NewLine to the end of richTxtWords' text
+                    richTxtWords.Text += "\n";
+                else
+                    // Returns
+                    return;
             }
+            // Append new words to the end of richTxtWords' text
+            richTxtWords.Text += words;
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        #region Event Callback Methods
+
+        #region MainForm Event Callback Methods
+
+        // Fixes form and changes its icon
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            txtMaxLength.Visible = txtMinLength.Visible = lblMax.Visible = lblMin.Visible = txtMaxLength.Enabled = txtMinLength.Enabled = lblMax.Enabled = lblMin.Enabled = chboxFilterLength.Checked;
+            fixLeft();
             fixRight();
+            // Sets MainForm's icon
+            IntPtr pIcon = Properties.Resources.PASS.GetHicon();
+            Icon icon = Icon.FromHandle(pIcon);
+            Icon = icon;
+            icon.Dispose();
+        }
+
+        // Loads settings
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            loadSettings();
+        }
+
+        // Saves settings before form closes
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Saves settings before form closes
             saveSettings();
         }
 
-        private void txt_TextChanged(object sender, EventArgs e)
-        {
-            if (((TextBox)sender).TextLength == 0)
-                ((TextBox)sender).Text = "1";
-            saveSettings();
-        }
+        #endregion
+
+        #region Checkboxes Event Callback Methods
+        // These methods fix form and saves settings
 
         private void chboxMultiThread_CheckedChanged(object sender, EventArgs e)
         {
@@ -812,49 +710,14 @@ namespace pass_maker.Forms
             saveSettings();
         }
 
-        private void openWordListToolStripMenuItem_Click(object sender, EventArgs e)
+        private void chboxFilterLength_CheckedChanged(object sender, EventArgs e)
         {
-            OpenWordList();
+            txtMaxLength.Visible = txtMinLength.Visible = lblMax.Visible = lblMin.Visible = txtMaxLength.Enabled = txtMinLength.Enabled = lblMax.Enabled = lblMin.Enabled = chboxFilterLength.Checked;
+            fixRight();
+            saveSettings();
         }
 
-        // Open Word List Method
-        // Reads a wordlist and write it in richTxtWords
-        private void OpenWordList()
-        {
-            // Defines openFD
-            OpenFileDialog openFD = new OpenFileDialog();
-            openFD.Multiselect = false;
-            openFD.Filter = "Text Document|*.txt";
-            openFD.Title = "Select a WordList";
-            // Shows openFD dislog
-            if (openFD.ShowDialog() == DialogResult.OK)
-            {
-                // Reads choosen file
-                string words = File.ReadAllText(openFD.FileName);
-                // Checks id words variable is empty
-                if (words.Length < 1)
-                    return;
-                // Checks if there is anything in richTxtWords
-                if (richTxtWords.Text.Length > 0)
-                {
-                    // Shows a message to user
-                    DialogResult result = MessageBox.Show("You want to\nClear current Words and open WordList\nor\nAppend WordList to the current Words?\nClear : Yes\nAppend : No", "Clear OR Append?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                        // Clears richTxtWords text
-                        richTxtWords.Clear();
-                    else if (result == DialogResult.No)
-                        // Adds a NewLine to the end of richTxtWords' text
-                        richTxtWords.Text += "\n";
-                    else
-                        // Returns
-                        return;
-                }
-                // Append new words to the end of richTxtWords' text
-                richTxtWords.Text += words;
-            }
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void chboxSplitList_CheckedChanged(object sender, EventArgs e)
         {
             txtPartCount.Enabled = lblSplitCount.Enabled = lblSplitCount.Visible = txtPartCount.Visible = chboxSplitList.Checked;
             fixLeft();
@@ -868,23 +731,80 @@ namespace pass_maker.Forms
             saveSettings();
         }
 
-        // Fixes form and changes its icon
-        private void Form1_Load(object sender, EventArgs e)
+        #endregion
+
+        #region TextChanged Event Callback Methods
+
+        // Makes sure the input isn't empety and saves settings
+        private void txt_TextChanged(object sender, EventArgs e)
         {
-            fixLeft();
-            fixRight();
-            // Sets MainForm's icon
-            IntPtr pIcon = Properties.Resources.PASS.GetHicon();
-            Icon icon = Icon.FromHandle(pIcon);
-            Icon = icon;
-            icon.Dispose();
+            if (((TextBox)sender).TextLength == 0)
+                ((TextBox)sender).Text = "1";
+            saveSettings();
         }
 
-        // Saves settings before form closes
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        // Shows output passwords count in lblResultsCount
+        private void richTxtResults_TextChanged(object sender, EventArgs e)
         {
-            // Saves settings before form closes
-            saveSettings();
+            lblResultsCount.Text = richTxtResults.Lines.Length.ToString();
+        }
+
+        // Shows input words count in lblWordsCount
+        private void richTxtWords_TextChanged(object sender, EventArgs e)
+        {
+            lblWordsCount.Text = richTxtWords.Lines.Length.ToString();
+        }
+
+        #endregion
+
+        #region Click Event Callback Methods
+
+        // Starts New Word Generation
+        private void btnAddWords_Click(object sender, EventArgs e)
+        {
+            // Checks if user entered any words to generate new words
+            if (richTxtWords.Text == "")
+            {
+                MessageBox.Show("Please enter some words to generate new words!!", "No Word?!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Starts (AddWords Method) as a new thread
+            Thread addWordsThread = new Thread(AddWords);
+            addWordsThread.Start();
+        }
+
+        //  Starts Password Generation
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            // Checks if user entered any words to generate passwords
+            if (richTxtWords.Text == "")
+            {
+                MessageBox.Show("Please enter some words to generate passwords!!", "No Word?!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Starts (Start Method) as a new thread
+            Thread t = new Thread(Start);
+            t.Start();
+        }
+
+        #endregion
+
+        #region File Menu Event Callback Methods
+
+        // Shows a OpenFileDialog for choosing a wordlist file
+        private void openWordListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Defines openFD
+            OpenFileDialog openFD = new OpenFileDialog();
+            openFD.Multiselect = false;
+            openFD.Filter = "Text Document|*.txt";
+            openFD.Title = "Select a WordList";
+            // Shows openFD dislog
+            if (openFD.ShowDialog() == DialogResult.OK)
+            {
+                // Calls OpenWordList
+                OpenWordList(openFD.FileName);
+            }
         }
 
         // Shows split form
@@ -900,37 +820,10 @@ namespace pass_maker.Forms
             Application.Exit();
         }
 
-        private void blogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Starts https://CodeWriter21.blog.ir
-            // To support us, please DONOT DELETE THESE LINES
-            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
-        }
 
-        private void supportUsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        #endregion
 
-        }
-
-        // Add Words Button OnClick event callback method
-        private void btnAddWords_Click(object sender, EventArgs e)
-        {
-            // Starts (AddWords Method) as a new thread
-            Thread addWordsThread = new Thread(AddWords);
-            addWordsThread.Start();
-        }
-
-        // Shows output passwords count
-        private void richTxtResults_TextChanged(object sender, EventArgs e)
-        {
-            lblResultsCount.Text = richTxtResults.Lines.Length.ToString();
-        }
-
-        // Shows input words count
-        private void richTxtWords_TextChanged(object sender, EventArgs e)
-        {
-            lblWordsCount.Text = richTxtWords.Lines.Length.ToString();
-        }
+        #region Edit Menu Event Callback Methods
 
         // Copies passwords in richTxtResults to clipboard
         private void copyPasswordsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -954,13 +847,6 @@ namespace pass_maker.Forms
             }
             Clipboard.SetText(richTxtResults.Text);
             richTxtResults.Clear();
-        }
-
-        private void telegramChannelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Starts https://t.me/CodeWriter21
-            // To support us, please DONOT DELETE THESE LINES
-            System.Diagnostics.Process.Start("https://t.me/CodeWriter21");
         }
 
         // Copies words in richTxtWords to clipboard
@@ -1008,10 +894,34 @@ namespace pass_maker.Forms
             richTxtWords.Text += Clipboard.GetText();
         }
 
-        // Loads settings
-        private void Form1_Shown(object sender, EventArgs e)
+        #endregion
+
+        #region Open Link Event Callback Methods
+
+        private void linkLabelCodeWriter21_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            loadSettings();
+            // Starts https://CodeWriter21.blog.ir
+            // To support us, please DONOT DELETE THESE LINES
+            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
+        }
+
+        private void blogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Starts https://CodeWriter21.blog.ir
+            // To support us, please DONOT DELETE THESE LINES
+            System.Diagnostics.Process.Start("https://CodeWriter21.blog.ir");
+        }
+
+        private void supportUsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void telegramChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Starts https://t.me/CodeWriter21
+            // To support us, please DONOT DELETE THESE LINES
+            System.Diagnostics.Process.Start("https://t.me/CodeWriter21");
         }
 
         private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1020,5 +930,30 @@ namespace pass_maker.Forms
             // To support us, please DONOT DELETE THESE LINES
             System.Diagnostics.Process.Start("https://github.com/MPCodeWriter21/PasswordListGenerator");
         }
+
+        #endregion
+
+        private void txt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // returns if user presses Backspace Button
+            if (e.KeyChar == '\b')
+                return;
+            // Chacks if user entered a number
+            if (!char.IsNumber(e.KeyChar))
+                e.Handled = true;
+            TextBox Sender = ((TextBox)sender);
+            if (Sender.SelectionLength < 1)
+            {
+                if (Sender.TextLength == 9)
+                {
+                    if ((!(int.Parse(Sender.Text) <= 214748364)) || (!(int.Parse(e.KeyChar.ToString()) <= 7)))
+                        e.Handled = true;
+                }
+                if (Sender.TextLength > 9)
+                    e.Handled = true;
+            }
+        }
+
+        #endregion
     }
 }

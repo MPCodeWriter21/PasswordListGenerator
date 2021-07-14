@@ -184,7 +184,7 @@
             this.chboxFilterLength.TabIndex = 10;
             this.chboxFilterLength.Text = "Filter Length";
             this.chboxFilterLength.UseVisualStyleBackColor = true;
-            this.chboxFilterLength.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.chboxFilterLength.CheckedChanged += new System.EventHandler(this.chboxFilterLength_CheckedChanged);
             // 
             // lblMin
             // 
@@ -247,7 +247,7 @@
             this.txtMaxThread.Name = "txtMaxThread";
             this.txtMaxThread.Size = new System.Drawing.Size(84, 20);
             this.txtMaxThread.TabIndex = 12;
-            this.txtMaxThread.Text = "21";
+            this.txtMaxThread.Text = "3";
             this.txtMaxThread.TextChanged += new System.EventHandler(this.txt_TextChanged);
             this.txtMaxThread.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
             // 
@@ -445,7 +445,7 @@
             this.chboxSplitList.TabIndex = 8;
             this.chboxSplitList.Text = "Split List";
             this.chboxSplitList.UseVisualStyleBackColor = true;
-            this.chboxSplitList.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.chboxSplitList.CheckedChanged += new System.EventHandler(this.chboxSplitList_CheckedChanged);
             // 
             // lblSplitCount
             // 
@@ -565,9 +565,9 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password List Generator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

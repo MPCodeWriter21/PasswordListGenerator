@@ -13,21 +13,22 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>ftp://ftpupload.net/htdocs/PasswordListGenerator/</PublishUrl>
+    <PublishUrl>C:\Users\Morteza\source\repos\pass maker\PasswordGeneratorPublish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Background</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>http://mehradp21.vastserve.com/PasswordListGenerator/</UpdateUrl>
     <ErrorReportUrl>https://CodeWriter21.blog.ir</ErrorReportUrl>
+    <ProductName>PasswordListGenerator</ProductName>
+    <PublisherName>CodeWriter21</PublisherName>
     <WebPage>index.html</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -84,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Convertor.cs" />
     <Compile Include="Forms\AddingWordsForm.cs">
       <SubType>Form</SubType>
     </Compile>
